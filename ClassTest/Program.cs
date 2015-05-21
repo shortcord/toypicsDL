@@ -6,8 +6,8 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using HtmlAgilityPack;
-using CommandLine;
-using CommandLine.Text;
+using CommandLine; //its not used in this test
+using CommandLine.Text; // ^^
 
 namespace Something
 {
@@ -16,30 +16,31 @@ namespace Something
         static void Main(string[] args)
         {
 
-//            const string url = @"https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/";
-            const string url = @"https://videos.toypics.net/Junee/public/";
+//            const string url = @"https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/"; // dev
+            const string url = @"https://videos.toypics.net/Junee/public/"; // dev
 
             try
             {
 
-                HtmlWeb hw = new HtmlWeb();
-                HtmlDocument doc = hw.Load(url);
+                HtmlWeb hw = new HtmlWeb(); // HtmlAgilityPack
+                HtmlDocument doc = hw.Load(url); // load uri
 
+                // single video download
                 #region video download
-                if (Regex.IsMatch(url, "(https://videos.toypics.net/view/)"))
+                if (Regex.IsMatch(url, "(https://videos.toypics.net/view/)")) // filter single video pages
                 {
-                    foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//script"))
+                    foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//script")) // for each <script></script> tag on page
                     {
-                        if (Regex.IsMatch(link.InnerText, "(static1.toypics.net)"))
+                        if (Regex.IsMatch(link.InnerText, "(static1.toypics.net)")) //find the tag that contains javascript player init code
                         {
                             try
                             {
-                                Uri video = getVidUri(link, @".toypics.net/flvideo/", ".mp4");
+                                Uri video = getVidUri(link, @".toypics.net/flvideo/", ".mp4"); //get raw video link
                                 using (WebClient dl = new WebClient())
                                 {
-                                    dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                                    dl.DownloadFileAsync(video, "video.mp4");
-                                    Console.WriteLine("Done");
+                                    dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback); //dev
+                                    dl.DownloadFileAsync(video, "video.mp4"); //dev
+                                    Console.WriteLine("Done"); //dev
                                 }
 
                             }
@@ -47,34 +48,34 @@ namespace Something
                             {
                                 Console.WriteLine(ex);
                             }
-                            break;
                         }
+                        break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
                     }
                 }
                 #endregion
 
-                if (Regex.IsMatch(url, "(/public/)"))
+                // user profile download
+                if (Regex.IsMatch(url, "(/public/)")) // /public/ is unique to user profiles
                 {
-                    foreach (HtmlNode videolink in doc.DocumentNode.SelectNodes("//p[@class='video-entry-title']/a"))
+                    foreach (HtmlNode videolink in doc.DocumentNode.SelectNodes("//p[@class='video-entry-title']/a")) //loop through every <a> tag page link
                     {
-                        if (videolink.Attributes["href"].Value != String.Empty && Regex.IsMatch(videolink.Attributes["href"].Value, "(https://videos.toypics.net/view/)"))
+                        if (videolink.Attributes["href"].Value != String.Empty && Regex.IsMatch(videolink.Attributes["href"].Value, "(https://videos.toypics.net/view/)")) // filter only video pages
                         {
-                            Console.WriteLine(
-                                    videolink.Attributes["href"].Value
-                                );
-                            downloadVid(videolink.Attributes["href"].Value);
+                            Console.WriteLine( videolink.Attributes["href"].Value ); // dev
+                            downloadVid(videolink.Attributes["href"].Value); // send whole single video page to downloader
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error happened and shit | {0}", ex);
+                Console.WriteLine("Error happened and shit | {0}", ex); // dev
             }
 
             Console.ReadKey();
         }
-
+        
+        // dev
         public static Uri getVidUri(HtmlNode link, string strStart, string strEnd)
         {
             string strSource = link.InnerText.ToString();
@@ -92,29 +93,30 @@ namespace Something
             }
         }       
 
+        // dev
         private static void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
         {
             Console.Title = String.Format("{0} % complete...", e.ProgressPercentage);
         }
 
-
+        // dev
         private static void downloadVid(string page)
         {
-            HtmlWeb hw = new HtmlWeb();
-            HtmlDocument doc = hw.Load(page);
-            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//script"))
+            HtmlWeb hw = new HtmlWeb();// HtmlAgilityPack
+            HtmlDocument doc = hw.Load(page);// load uri
+            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//script"))//loop every <script> tag
             {
-                if (Regex.IsMatch(link.InnerText, "(static1.toypics.net)"))
+                if (Regex.IsMatch(link.InnerText, "(static1.toypics.net)"))// find javascript video player init code
                 {
                     try
                     {
-                        Uri video = getVidUri(link, @".toypics.net/flvideo/", ".mp4");
+                        Uri video = getVidUri(link, @".toypics.net/flvideo/", ".mp4");// find video source
                         using (WebClient dl = new WebClient())
                         {
-                            dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                            dl.DownloadFileAsync(video, "video.mp4");
-                            Console.WriteLine("Done");
-                            Console.ReadKey();
+                            dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);// dev
+                            dl.DownloadFileAsync(video, "video.mp4");// dev
+                            Console.WriteLine("Done");// dev
+                            Console.ReadKey();// dev
                             return;
                         }
 
@@ -123,8 +125,8 @@ namespace Something
                     {
                         Console.WriteLine(ex);
                     }
-                    break;
                 }
+                break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
             }
         }
     }
