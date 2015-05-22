@@ -16,8 +16,8 @@ namespace Something
         static void Main(string[] args)
         {
 
-//            const string url = @"https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/"; // dev
-            const string url = @"https://videos.toypics.net/Junee/public/"; // dev
+            const string url = @"https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/"; // dev
+//            const string url = @"https://videos.toypics.net/Junee/public/"; // dev
 
             try
             {
@@ -38,23 +38,25 @@ namespace Something
                                 Uri video = getVidUri(link, @".toypics.net/flvideo/", ".mp4"); //get raw video link
                                 using (WebClient dl = new WebClient())
                                 {
-                                    dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback); //dev
-                                    dl.DownloadFileAsync(video, "video.mp4"); //dev
+                                    //dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback); //dev
+                                    //dl.DownloadFileAsync(video, @"video.mp4"); //dev
                                     Console.WriteLine("Done"); //dev
+                                    Console.WriteLine(getTitle(url));
                                 }
 
                             }
-                            catch (Exception ex)
+                            catch (WebException)
                             {
-                                Console.WriteLine(ex);
+                                throw;
                             }
+                            break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
                         }
-                        break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
                     }
                 }
                 #endregion
 
                 // user profile download
+                #region user profile download
                 if (Regex.IsMatch(url, "(/public/)")) // /public/ is unique to user profiles
                 {
                     foreach (HtmlNode videolink in doc.DocumentNode.SelectNodes("//p[@class='video-entry-title']/a")) //loop through every <a> tag page link
@@ -66,10 +68,11 @@ namespace Something
                         }
                     }
                 }
+                #endregion
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error happened and shit | {0}", ex); // dev
+                Console.WriteLine("There was an error somewhere; {0}", ex.Message);
             }
 
             Console.ReadKey();
@@ -126,8 +129,16 @@ namespace Something
                         Console.WriteLine(ex);
                     }
                 }
-                break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
             }
+        }
+
+        private static string getTitle(string page)
+        {
+            HtmlWeb hw = new HtmlWeb();// HtmlAgilityPack
+            HtmlDocument doc = hw.Load(page);// load uri
+            string link = doc.DocumentNode.SelectSingleNode("//*[@id='view-video-content']/*[@class='section bg2']/*[@class='hd']").InnerText; // the true title is stored in a <div> tag with the class of hd-l (HD-L) but i keep getting an exception if i try /*[@class='hd-l']
+            //for now im just going to trim the returned string
+            return link.Trim();
         }
     }
 }

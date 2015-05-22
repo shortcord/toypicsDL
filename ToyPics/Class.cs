@@ -103,7 +103,6 @@ namespace ToyPics
                         Console.WriteLine(ex);
                     }
                 }
-                break; //break out of the foreach loop, only one javascript player on each page but there are multiple <script> tags , so its useless to continue once we find the player
             }
         }
     }
