@@ -5,7 +5,7 @@ Currently works on ```/{user}/public/``` list and ```/view/{vid#}/{vidTitle}/```
 
 'works' is a strong word; it downloads the video so far but there isnt much in the way of user friendliness
 
-Depeneds on
+Depends on
 - [HtmlAgilityPack](https://htmlagilitypack.codeplex.com/)
 - [CommandLine Parser Library](https://commandline.codeplex.com/)
 

@@ -105,5 +105,14 @@ namespace ToyPics
                 }
             }
         }
+
+        private static string getTitle(string page)
+        {
+            HtmlWeb hw = new HtmlWeb();// HtmlAgilityPack
+            HtmlDocument doc = hw.Load(page);// load uri
+            string link = doc.DocumentNode.SelectSingleNode("//*[@id='view-video-content']/*[@class='section bg2']/*[@class='hd']").InnerText; // the true title is stored in a <div> tag with the class of hd-l (HD-L) but i keep getting an exception if i try /*[@class='hd-l']
+            //for now im just going to trim the returned string
+            return link.Trim();
+        }
     }
 }
