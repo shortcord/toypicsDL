@@ -96,12 +96,7 @@ namespace ToyPics
                         Uri video = this.getVidUri(link);// find video source
                         using (WebClient dl = new WebClient())
                         {
-                            var tmp1 = this.ClassVersion; //dev
-                            var tmp2 = this.uid.uid; //dev 
-                            string tmp3 = this.uid.userUID(); //dev; same as above
-
-                            // this is causing a NullRef exceptionl i have no fucking clue what could be causing this
-                            dl.ResponseHeaders.Add("UserAgent", String.Format("ToyPisDownloader [task=videoDownload] [version={0}] [uid={1}] [github/teh-random-name/toypicsDL]", tmp1, tmp2));
+                            dl.Headers.Add(HttpRequestHeader.UserAgent, String.Format("ToyPisDownloader [task=videoDownload] [version={0}] [uid={1}] [github/teh-random-name/toypicsDL]", this.ClassVersion, this.uid.userUID()));
                             //dl.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);// dev
                             dl.DownloadFile(video, String.Concat(this.saveLocation, this.getTitle(this.pageURL), ".mp4"));// dev
                         }

@@ -16,7 +16,7 @@ namespace ToyPics
     class UIDGen
     {
         private string appdataFolder = String.Format(@"{0}\ShortCord\toypicsDL\", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-        public string uid;
+        private string uid;
 
         public UIDGen()
         {
