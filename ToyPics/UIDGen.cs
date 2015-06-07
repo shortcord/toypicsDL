@@ -47,8 +47,9 @@ namespace ToyPics
                     else // folder doesnt exist; so create it and make the uid file
                     {
                         Directory.CreateDirectory(appdataFolder);
+                        Thread.Sleep(500);
                         File.Create(file);
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                     }
                 }
             }
