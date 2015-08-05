@@ -7,7 +7,7 @@ Currently works on ```/{user}/public/``` list and ```/view/{vid#}/{vidTitle}/```
 
 Depends on
 - [HtmlAgilityPack](https://htmlagilitypack.codeplex.com/)
-- ~~~[CommandLine Parser Library](https://commandline.codeplex.com/)~~~
+- ~~[CommandLine Parser Library](https://commandline.codeplex.com/)~~
 
 ----
 
