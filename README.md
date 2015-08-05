@@ -13,4 +13,4 @@ Depends on
 
 GUI Testing is available [here](https://github.com/teh-random-name/toypicsDL/releases/tag/v0.1-pre)
 
-GUI Currently doesn't support downloading of whole userpages.
+**GUI Currently doesn't support downloading of whole userpages (```/{user}/public/```).**
