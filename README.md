@@ -7,8 +7,10 @@ Currently works on ```/{user}/public/``` list and ```/view/{vid#}/{vidTitle}/```
 
 Depends on
 - [HtmlAgilityPack](https://htmlagilitypack.codeplex.com/)
-- [CommandLine Parser Library](https://commandline.codeplex.com/)
+- ~~~[CommandLine Parser Library](https://commandline.codeplex.com/)~~~
 
 ----
 
-GUI is to be completed soon-ish
+GUI Testing is available [here](https://github.com/teh-random-name/toypicsDL/releases/tag/v0.1-pre)
+
+GUI Currently doesn't support downloading of whole userpages.
