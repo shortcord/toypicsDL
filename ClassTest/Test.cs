@@ -9,7 +9,6 @@ namespace Something
 {
     class Test
     {
-
         static void Main()
         {
             using (ToyPics.Class get = new ToyPics.Class("https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/", @"D:\Personal\Desktop\", false))
