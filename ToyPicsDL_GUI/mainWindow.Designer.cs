@@ -29,9 +29,10 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.UriToDownload = new System.Windows.Forms.TextBox();
+            this.GtGLabel = new System.Windows.Forms.Label();
+            this.downloadButton = new System.Windows.Forms.Button();
             this.whereToSaveTo = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -81,7 +82,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -95,33 +96,24 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer1.Panel1.Controls.Add(this.downloadButton);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.whereToSaveTo);
             this.splitContainer1.Panel2.Controls.Add(this.button2);
             this.splitContainer1.Size = new System.Drawing.Size(614, 285);
-            this.splitContainer1.SplitterDistance = 40;
+            this.splitContainer1.SplitterDistance = 60;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(421, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(190, 33);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Download";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.UriToDownload);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Controls.Add(this.GtGLabel);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(412, 34);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(412, 55);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // UriToDownload
@@ -132,9 +124,28 @@
             this.UriToDownload.TabIndex = 0;
             this.UriToDownload.TextChanged += new System.EventHandler(this.UriToDownload_TextChanged);
             // 
+            // GtGLabel
+            // 
+            this.GtGLabel.AutoSize = true;
+            this.GtGLabel.Location = new System.Drawing.Point(3, 26);
+            this.GtGLabel.Name = "GtGLabel";
+            this.GtGLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.GtGLabel.Size = new System.Drawing.Size(0, 13);
+            this.GtGLabel.TabIndex = 1;
+            // 
+            // downloadButton
+            // 
+            this.downloadButton.Location = new System.Drawing.Point(421, 3);
+            this.downloadButton.Name = "downloadButton";
+            this.downloadButton.Size = new System.Drawing.Size(190, 33);
+            this.downloadButton.TabIndex = 1;
+            this.downloadButton.Text = "Download";
+            this.downloadButton.UseVisualStyleBackColor = true;
+            this.downloadButton.Click += new System.EventHandler(this.button1_Click);
+            // 
             // whereToSaveTo
             // 
-            this.whereToSaveTo.Location = new System.Drawing.Point(6, 3);
+            this.whereToSaveTo.Location = new System.Drawing.Point(6, 16);
             this.whereToSaveTo.Name = "whereToSaveTo";
             this.whereToSaveTo.ReadOnly = true;
             this.whereToSaveTo.Size = new System.Drawing.Size(605, 20);
@@ -142,7 +153,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 29);
+            this.button2.Location = new System.Drawing.Point(6, 42);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(190, 23);
             this.button2.TabIndex = 0;
@@ -191,12 +202,13 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button downloadButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox UriToDownload;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox whereToSaveTo;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label GtGLabel;
     }
 }
 

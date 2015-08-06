@@ -11,9 +11,15 @@ namespace ToyPicsDL_GUI {
         /// </summary>
         [STAThread]
         static void Main() {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainWindow());
+            try {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new mainWindow());
+            } catch (Exception ex) {
+                MessageBox.Show(String.Concat(ex.Message, Environment.NewLine, "The Program will now close"), "Program Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
         }
     }
 }

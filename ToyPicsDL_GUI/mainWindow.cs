@@ -20,6 +20,8 @@ namespace ToyPicsDL_GUI {
             this.FormClosing += MainWindow_FormClosing; //subscribe to Formclosing event
 
             this.classVersion.Text = String.Concat("v",ToyPics.Class.version); //I would put this in the mainWindow.Designer.cs but it keeps getting rewriten as a string
+            this.downloadButton.Enabled = false;
+            this.GtGLabel.Text = "Enter a link to download";
 
             if (Properties.Settings.Default.saveLocation != String.Empty) {
                 this.whereToSaveTo.Text = Properties.Settings.Default.saveLocation;
@@ -33,8 +35,46 @@ namespace ToyPicsDL_GUI {
         }
 
         private void UriToDownload_TextChanged(object sender, EventArgs e) {
-            if (this.UriToDownload.BackColor == colors.errorRed)
-                this.UriToDownload.BackColor = System.Drawing.SystemColors.Window;
+            //if (this.UriToDownload.BackColor == colors.errorRed)
+            //    this.UriToDownload.BackColor = System.Drawing.SystemColors.Window;
+            //https://videos.toypics.net/view/3300/butt-bouncing-on-chance~/
+            //https://videos.toypics.net/Junee/public/
+            string downloadLoco = Properties.Settings.Default.saveLocation;
+            string toDownload = this.UriToDownload.Text;
+            try {
+                if (Regex.IsMatch(this.UriToDownload.Text, "(?i)((videos.toypics.net))")) {
+                    if (Regex.IsMatch(toDownload, @"(?i)(/public/)")) { // if it is a user page
+                        //userpage = true;
+                        //this.button1.Enabled = true;
+                        this.downloadButton.Enabled = false;
+                        this.GtGLabel.ForeColor = colors.warningFont;
+                        this.UriToDownload.BackColor = colors.warningBackground;
+                        this.GtGLabel.Text = "Downloading of userpages isn\'t currently implemented";
+                    } else if (Regex.IsMatch(toDownload, @"(?i)(/view/)")) { // if it is a video page
+                        this.downloadButton.Enabled = true;
+                        this.UriToDownload.BackColor = colors.goodBackground;
+                        this.GtGLabel.ForeColor = colors.goodFont;
+                        this.GtGLabel.Text = "Vaild Link";
+                    } else {
+                        this.downloadButton.Enabled = false;
+                        this.UriToDownload.BackColor = colors.errorBackground;
+                        this.GtGLabel.ForeColor = colors.errorFont;
+                        this.GtGLabel.Text = "Not a vaild ToyPics link";
+                    }
+                } else if (string.IsNullOrWhiteSpace(toDownload)) {
+                    this.downloadButton.Enabled = false;
+                    this.UriToDownload.BackColor = System.Drawing.SystemColors.Window;
+                    this.GtGLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+                    this.GtGLabel.Text = "Enter a link to download";
+                } else {
+                    this.downloadButton.Enabled = false;
+                    this.UriToDownload.BackColor = colors.errorBackground;
+                    this.GtGLabel.ForeColor = colors.errorFont;
+                    this.GtGLabel.Text = "Not a vaild ToyPics link";
+                }
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Program Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e) {
@@ -53,22 +93,8 @@ namespace ToyPicsDL_GUI {
         private void button1_Click(object sender, EventArgs e) {
 
             string downloadLoco = Properties.Settings.Default.saveLocation;
-            string toDownload = string.Empty;
+            string toDownload = this.UriToDownload.Text;
             try {
-                if (this.UriToDownload.Text != String.Empty &&
-               Regex.IsMatch(this.UriToDownload.Text, "(?i)((videos.toypics.net))")) {
-                    toDownload = this.UriToDownload.Text;
-                } else {
-                    MessageBox.Show("The Url you entered isn't correct", "Oops?", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.UriToDownload.BackColor = colors.errorRed;
-                    return;
-                }
-
-                if (Regex.IsMatch(toDownload, @"(?i)(/public/)")) {
-                    //userpage = true;
-                    throw new NotImplementedException("Downloading of userpages isn\'t currently implemented");
-                }
-
                 downloadWindow dlWindow = new downloadWindow(toDownload, downloadLoco, userpage);
                 DialogResult dlWindowResult = dlWindow.ShowDialog();
 
@@ -77,8 +103,6 @@ namespace ToyPicsDL_GUI {
                     history.Add(toDownload);
                     this.UriToDownload.Clear();
                 }
-            } catch (NotImplementedException ex) {
-                MessageBox.Show(ex.Message, "Implementation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } catch (Exception ex) {
                 MessageBox.Show(String.Concat(ex.Message, Environment.NewLine, "The program will now close"), "Program Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
